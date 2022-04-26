@@ -1,13 +1,16 @@
+var questionTitle = document.querySelector(".questionTitle");
+var firstButton = document.querySelector(".Button-One");
+var secondButton = document.querySelector(".Button-Two");
+var thirdButton = document.querySelector(".Button-Three");
+var fourthButton = document.querySelector(".Button-Four");
+
 document.querySelector(".title").textContent = "Are you a Mean Girl?";
 document.querySelector(".comment").textContent =
     "Take this quiz to see if you're a Mean Girl! You have 30 seconds and, with every wrong answer, the time will decrease! Have fun and Good Luck!";
 
-var optionButtons = document.querySelector(".questions", "buttons");
-optionButtons.style.display = "none";
-
 var startButton = document.querySelector(".start-Button");
 var timerEl = document.querySelector(".timer");
-var timer = 20;
+var timer = 30;
 
 startButton.addEventListener("click", function () {
     document.querySelector(".title").textContent = " ";
@@ -17,50 +20,82 @@ startButton.addEventListener("click", function () {
     countdown();
 });
 
+startButton.addEventListener("click", function () {
+    document.querySelector(".title").textContent = " ";
+    document.querySelector(".comment").textContent = " ";
+    startButton.style.display = "none";
+
+    questionOne();
+});
+
 function countdown() {
     var timerInterval = setInterval(function () {
-        timerEl.textContent = timer + " seconds remaining";
+        timerEl.textContent = timer + " second(s) remaining";
         timer--;
 
-        //add parameter of when the question is answered wrong and the time dec
-        //by -6 sec
-
-        if (timeLeft === 1) {
-            timerEl.textContent = timer + " second remaining";
-            timeLeft--;
-        } else if (timer === 0) {
+        if (timer === 0) {
             timerEl.textContent = " ";
             clearInterval(timerInterval);
-            scorePage();
+            // scorepage();
         }
     }, 1000);
 }
 
-//Make answers an array? and make the whole question and answers an object?
-//Then isolate the answers?? and for ever wrong count -6 and when count hits 0
-//Pop up highscore html sheet?
-//1. Stop trying to make "what" happen?
-//a. Wicked
-//b. Cool
-//c. Fetch
-//d. Sweet
-//2. Why is Gretchen Weiner's hair so big?
-//a. Because it's full of secrets
-//b. Because she's too cool for anyone
-//c. Because her dad invented the Toaster Strudel
-//d. Because she's too popular
-//3. Which accessory of Cady Heron's did Regina George compliment?
-//a. Ring
-//b. Bracelet
-//c. Necklace
-//d. Earrings
-//4. On Wednesday's we wear pink, but what day do we wear trackpants?
-//a. Never
-//b. Monday
-//c. Friday
-//d. Tuesday
-//5. On what date did Aaron Samuels ask Cady Heron what day it was?
-//a. December 3rd
-//b. October 3rd
-//c. September 3rd
-//d. November 3rd
+function questionOne() {
+    questionTitle.textContent = "1. Stop trying to make 'what' happen?";
+
+    var ButtonOne = document.createElement("button");
+    ButtonOne.innerHTML = "Wicked";
+    firstButton.appendChild(ButtonOne);
+
+    var ButtonTwo = document.createElement("button");
+    ButtonTwo.innerHTML = "Cool";
+    secondButton.appendChild(ButtonTwo);
+
+    var ButtonThree = document.createElement("button");
+    ButtonThree.innerHTML = "Fetch";
+    thirdButton.appendChild(ButtonThree);
+
+    var ButtonFour = document.createElement("button");
+    ButtonFour.innerHTML = "Sweet";
+    fourthButton.appendChild(ButtonFour);
+
+    var AllButtons = document.querySelector(".questions").children;
+    console.log(AllButtons);
+
+    AllButtons.addEventListener("click", function () {
+        if (AllButtons != ".Button-Three") {
+            timer = timer - 5;
+        }
+        if (timer === 0) {
+            timerEl.textContent = " ";
+            clearInterval(timerInterval);
+            // scorepage();
+        }
+        // questionTwo();
+    });
+}
+// let Choice = "";
+// var buttonCreation = document.createElement("button");
+// options.forEach(ButtonCreation);
+// document.querySelector(".Buttons").innerHTML = Choice;
+// function ButtonCreation(item) {
+//     var buttonCreate = document.createElement("button");
+//     buttonCreate += item;
+// }
+
+// var questionOne = '1. Stop trying to make "what" happen?';
+// var optionOne = ["Wicked, Cool, Fetch, Sweet"];
+// var questionTwo = "2. Why is Gretchen Weiner's hair so big?";
+// var optionTwo = [
+//     "Because it's full of secrets, Because she's too cool for anyone, Because her dad invented the Toaster Strudel, Because she's too popular",
+// ];
+// var questionThree =
+//     "3. Which accessory of Cady Heron's did Regina George compliment?";
+// var optionThree = ["Ring, Bracelet, Necklace, Earrings"];
+// var questionFour =
+//     "4. On Wednesday's we wear pink, but what day do we wear trackpants?";
+// var optionFour = ["Never, Monday, Friday, Tuesday"];
+// var questionFive =
+//     "5. On what date did Aaron Samuels ask Cady Heron what day it was?";
+// var optionFive = ["December 3rd, October 3rd, September 3rd, November 3rd"];
