@@ -3,6 +3,11 @@ var firstButton = document.querySelector(".Button-One");
 var secondButton = document.querySelector(".Button-Two");
 var thirdButton = document.querySelector(".Button-Three");
 var fourthButton = document.querySelector(".Button-Four");
+var AllButtons = document.getElementsByTagName("button");
+
+function AnswerParameters() {}
+
+document.body.children[2].style.visibility = "hidden";
 
 document.querySelector(".title").textContent = "Are you a Mean Girl?";
 document.querySelector(".comment").textContent =
@@ -33,48 +38,170 @@ function countdown() {
         timerEl.textContent = timer + " second(s) remaining";
         timer--;
 
-        if (timer === 0) {
+        if (timer === 0 || timer < 0) {
             timerEl.textContent = " ";
             clearInterval(timerInterval);
-            // scorepage();
+            scorePage();
         }
     }, 1000);
 }
 
 function questionOne() {
+    document.body.children[2].style.visibility = "visible";
     questionTitle.textContent = "1. Stop trying to make 'what' happen?";
+    firstButton.innerHTML = "Wicked";
+    secondButton.innerHTML = "Cool";
+    thirdButton.innerHTML = "Fetch";
+    fourthButton.innerHTML = "Sweet";
 
-    var ButtonOne = document.createElement("button");
-    ButtonOne.innerHTML = "Wicked";
-    firstButton.appendChild(ButtonOne);
-
-    var ButtonTwo = document.createElement("button");
-    ButtonTwo.innerHTML = "Cool";
-    secondButton.appendChild(ButtonTwo);
-
-    var ButtonThree = document.createElement("button");
-    ButtonThree.innerHTML = "Fetch";
-    thirdButton.appendChild(ButtonThree);
-
-    var ButtonFour = document.createElement("button");
-    ButtonFour.innerHTML = "Sweet";
-    fourthButton.appendChild(ButtonFour);
-
-    var AllButtons = document.querySelector(".questions").children;
     console.log(AllButtons);
 
-    AllButtons.addEventListener("click", function () {
-        if (AllButtons != ".Button-Three") {
-            timer = timer - 5;
+    console.log(AllButtons[1].innerHTML);
+    console.log(AllButtons[2].innerHTML);
+    console.log(AllButtons[3].innerHTML);
+    console.log(AllButtons[4].innerHTML);
+
+    console.log(AllButtons[3]);
+
+    function ButtonCorrection() {
+        if (this != AllButtons[3]) {
+            console.log(this);
+            timer = timer - 3;
         }
-        if (timer === 0) {
-            timerEl.textContent = " ";
-            clearInterval(timerInterval);
-            // scorepage();
-        }
-        // questionTwo();
-    });
+    }
+
+    // AllButtons[i] == this
+
+    for (var i = 0; i < AllButtons.length; i++) {
+        AllButtons[i].addEventListener("click", ButtonCorrection);
+    }
+
+    function removeHandler() {}
 }
+
+// AllButtons[1].addEventListener("click", function () {
+//     console.log("hello");
+//     timer = timer - 5;
+//     // questionTwo();
+// });
+// AllButtons[2].addEventListener("click", function () {
+//     console.log("hello");
+//     timer = timer - 5;
+//     // questionTwo();
+// });
+// AllButtons[3].addEventListener("click", function () {
+//     console.log("hello");
+//     // questionTwo();
+// });
+// AllButtons[4].addEventListener("click", function () {
+//     console.log("hello");
+//     timer = timer - 5;
+//     // questionTwo();
+// });
+
+function questionTwo() {
+    document.body.children[2].style.visibility = "visible";
+    questionTitle.textContent = "2. Why is Gretchen Weiner's hair so big?";
+    firstButton.innerHTML = "Because it's full of secrets";
+    secondButton.innerHTML = "Because she's too cool for anyone";
+    thirdButton.innerHTML = "Because her dad invented the Toaster Strudel";
+    fourthButton.innerHTML = "Because she's too popular";
+
+    for (var i = 0; i < AllButtons.length; i++) {
+        AllButtons[i].addEventListener("click", function () {
+            // AllButtons[i] == this
+            if (this != AllButtons[1]) {
+                console.log("test", this);
+                timer = timer - 3;
+            }
+            questionThree();
+        });
+    }
+}
+
+function questionThree() {
+    document.body.children[2].style.visibility = "visible";
+    questionTitle.textContent =
+        "3. Which accessory of Cady Heron's did Regina George compliment?";
+    firstButton.innerHTML = "Ring";
+    secondButton.innerHTML = "Bracelets";
+    thirdButton.innerHTML = "Necklace";
+    fourthButton.innerHTML = "Earrings";
+
+    for (var i = 0; i < AllButtons.length; i++) {
+        AllButtons[i].addEventListener("click", function () {
+            // AllButtons[i] == this
+            if (this != AllButtons[2]) {
+                console.log(this);
+                timer = timer - 3;
+            }
+            questionFour();
+        });
+    }
+}
+
+function questionFour() {
+    document.body.children[2].style.visibility = "visible";
+    questionTitle.textContent =
+        "4. On Wednesday's we wear pink, but what day do we wear trackpants?";
+    firstButton.innerHTML = "Never";
+    secondButton.innerHTML = "Wednesday";
+    thirdButton.innerHTML = "Friday";
+    fourthButton.innerHTML = "Thursday";
+
+    for (var i = 0; i < AllButtons.length; i++) {
+        AllButtons[i].addEventListener("click", function () {
+            // AllButtons[i] == this
+            if (this != AllButtons[3]) {
+                console.log(this);
+                timer = timer - 3;
+            }
+            questionFive();
+        });
+    }
+}
+
+function questionFive() {
+    document.body.children[2].style.visibility = "visible";
+    questionTitle.textContent =
+        "5. On what date did Aaron Samuels ask Cady Heron what day it was?";
+    firstButton.innerHTML = "December 3rd";
+    secondButton.innerHTML = "October 3rd";
+    thirdButton.innerHTML = "November 3rd";
+    fourthButton.innerHTML = "September 3rd";
+
+    for (var i = 0; i < AllButtons.length; i++) {
+        AllButtons[i].addEventListener("click", function () {
+            // AllButtons[i] == this
+            if (this != AllButtons[2]) {
+                console.log(this);
+                timer = timer - 3;
+            }
+        });
+    }
+    scorePage();
+}
+
+function scorePage() {
+    var userInformation = document.querySelector(".Name");
+    var score = document.querySelector(".score");
+
+    var userName = document.createElement("input");
+    userInformation.appendChild(userName);
+}
+
+// AllButtons.addEventListener("click", function () {
+//     if (document.body.children[2].getElementsByClassName("Button-Three")) {
+//         timer = timer - 5;
+//     }
+//     if (timer === 0) {
+//         timerEl.textContent = " ";
+//         clearInterval(timerInterval);
+//         // scorepage();
+//     }
+//     // questionTwo();
+// });
+
 // let Choice = "";
 // var buttonCreation = document.createElement("button");
 // options.forEach(ButtonCreation);
