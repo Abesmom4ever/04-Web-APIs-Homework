@@ -3,9 +3,23 @@ var firstButton = document.querySelector(".Button-One");
 var secondButton = document.querySelector(".Button-Two");
 var thirdButton = document.querySelector(".Button-Three");
 var fourthButton = document.querySelector(".Button-Four");
-var AllButtons = document.getElementsByTagName("button");
+var AllButtons = document.body.children[2].getElementsByTagName("button");
+console.log(AllButtons);
 
-function AnswerParameters() {}
+// var correct = ["1", "2", "3"];
+// var questionNum = 0;
+
+// for (var i = 0; i < AllButtons.length; i++) {
+//     AllButtons[i].addEventListener("click", AnswerParameters(this));
+// }
+
+// function AnswerParameters(clickedButton) {
+//     if (clickedButton == correct[questionNum]) {
+//         questionNum++;
+//     } else {
+//         timer = timer - 3;
+//     }
+// }
 
 document.body.children[2].style.visibility = "hidden";
 
@@ -41,7 +55,7 @@ function countdown() {
         if (timer === 0 || timer < 0) {
             timerEl.textContent = " ";
             clearInterval(timerInterval);
-            scorePage();
+            // scorePage();
         }
     }, 1000);
 }
@@ -54,30 +68,25 @@ function questionOne() {
     thirdButton.innerHTML = "Fetch";
     fourthButton.innerHTML = "Sweet";
 
-    console.log(AllButtons);
-
-    console.log(AllButtons[1].innerHTML);
-    console.log(AllButtons[2].innerHTML);
-    console.log(AllButtons[3].innerHTML);
-    console.log(AllButtons[4].innerHTML);
-
-    console.log(AllButtons[3]);
-
-    function ButtonCorrection() {
-        if (this != AllButtons[3]) {
-            console.log(this);
-            timer = timer - 3;
-        }
-    }
-
-    // AllButtons[i] == this
-
-    for (var i = 0; i < AllButtons.length; i++) {
-        AllButtons[i].addEventListener("click", ButtonCorrection);
-    }
-
-    function removeHandler() {}
+    // function ButtonCorrection() {
+    //     if (this != AllButtons[3]) {
+    //         console.log(this);
+    //         timer = timer - 3;
+    //     }
+    // // }
+    // console.log(AnswerParameters);
+    // AnswerParameters(AllButtons[3]);
 }
+// AllButtons[i] == this
+
+// console.log(AllButtons);
+
+// console.log(AllButtons[1].innerHTML);
+// console.log(AllButtons[2].innerHTML);
+// console.log(AllButtons[3].innerHTML);
+// console.log(AllButtons[4].innerHTML);
+
+// console.log(AllButtons[3]);
 
 // AllButtons[1].addEventListener("click", function () {
 //     console.log("hello");
