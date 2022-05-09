@@ -1,27 +1,48 @@
 var questionTitle = document.querySelector(".questionTitle");
-var firstButton = document.querySelector(".Button-One");
-var secondButton = document.querySelector(".Button-Two");
-var thirdButton = document.querySelector(".Button-Three");
-var fourthButton = document.querySelector(".Button-Four");
-var AllButtons = document.body.children[2].getElementsByTagName("button");
-console.log(AllButtons);
+var optionList = document.querySelector(".options");
 
-// var correct = ["1", "2", "3"];
-// var questionNum = 0;
+var questions = [
+    {
+        question: "1. Stop trying to make 'what' happen?",
+        options: ["Wicked", "Cool", "Fetch", "Sweet"],
+        answer: "Fetch",
+    },
+    {
+        question: "2. Why is Gretchen Weiner's hair so big?",
+        options: [
+            "Because it's full of secrets",
+            "Because she's too cool for anyone",
+            "Because her dad invented the Toaster Strudel",
+            "Because she's too popular",
+        ],
+        answer: "Because it's full of secrets",
+    },
+    {
+        question:
+            "3. Which accessory of Cady Heron's did Regina George compliment?",
+        options: ["Ring", "Bracelet", "Necklace", "Earrings"],
+        answer: "Bracelet",
+    },
+    {
+        question:
+            "4. On Wednesday's we wear pink, but what day do we wear trackpants?",
+        options: ["Never", "Tuesday", "Friday", "Thursday"],
+        answer: "Friday",
+    },
+    {
+        question:
+            "5. On what date did Aaron Samuels ask Cady Heron what day it was?",
+        options: [
+            "December 3rd",
+            "October 3rd",
+            "November 3rd",
+            "September 3rd",
+        ],
+        answer: "October 3rd",
+    },
+];
 
-// for (var i = 0; i < AllButtons.length; i++) {
-//     AllButtons[i].addEventListener("click", AnswerParameters(this));
-// }
-
-// function AnswerParameters(clickedButton) {
-//     if (clickedButton == correct[questionNum]) {
-//         questionNum++;
-//     } else {
-//         timer = timer - 3;
-//     }
-// }
-
-document.body.children[2].style.visibility = "hidden";
+console.log(questions.length);
 
 document.querySelector(".title").textContent = "Are you a Mean Girl?";
 document.querySelector(".comment").textContent =
@@ -29,22 +50,23 @@ document.querySelector(".comment").textContent =
 
 var startButton = document.querySelector(".start-Button");
 var timerEl = document.querySelector(".timer");
-var timer = 30;
+var timer = 60;
+var questionNumber = 0;
+
+document.body.children[1].style.visibility = "hidden";
 
 startButton.addEventListener("click", function () {
     document.querySelector(".title").textContent = " ";
     document.querySelector(".comment").textContent = " ";
     startButton.style.display = "none";
-
-    countdown();
+    beginQuestions(0);
 });
 
 startButton.addEventListener("click", function () {
     document.querySelector(".title").textContent = " ";
     document.querySelector(".comment").textContent = " ";
     startButton.style.display = "none";
-
-    questionOne();
+    countdown();
 });
 
 function countdown() {
@@ -53,185 +75,47 @@ function countdown() {
         timer--;
 
         if (timer === 0 || timer < 0) {
-            timerEl.textContent = " ";
+            timerEl.textContent = "";
             clearInterval(timerInterval);
-            // scorePage();
+            scorePage();
         }
     }, 1000);
 }
 
-function questionOne() {
-    document.body.children[2].style.visibility = "visible";
-    questionTitle.textContent = "1. Stop trying to make 'what' happen?";
-    firstButton.innerHTML = "Wicked";
-    secondButton.innerHTML = "Cool";
-    thirdButton.innerHTML = "Fetch";
-    fourthButton.innerHTML = "Sweet";
+function beginQuestions() {
+    document.body.children[1].style.visibility = "visible";
+    optionList.innerHTML = "";
+    questionTitle.innerHTML = "";
 
-    // function ButtonCorrection() {
-    //     if (this != AllButtons[3]) {
-    //         console.log(this);
-    //         timer = timer - 3;
-    //     }
-    // // }
-    // console.log(AnswerParameters);
-    // AnswerParameters(AllButtons[3]);
-}
-// AllButtons[i] == this
+    var currentQuestion = questions[questionNumber];
+    var options = currentQuestion.options;
+    console.log(currentQuestion);
 
-// console.log(AllButtons);
+    questionTitle.textContent = currentQuestion.question;
 
-// console.log(AllButtons[1].innerHTML);
-// console.log(AllButtons[2].innerHTML);
-// console.log(AllButtons[3].innerHTML);
-// console.log(AllButtons[4].innerHTML);
+    for (var i = 0; i < options.length; i++) {
+        var userChoices = options[i];
+        var choicebuttons = document.createElement("button");
+        choicebuttons.textContent = userChoices;
+        optionList.append(choicebuttons);
+        choicebuttons.style.cssText = `
+        display: flex;
+        flex-direction: column;
+        margin: 10px 0px;
+        padding: 5px;
+        `;
+        choicebuttons.addEventListener("click", function (e) {
+            var userSelection = e.target.textContent;
 
-// console.log(AllButtons[3]);
-
-// AllButtons[1].addEventListener("click", function () {
-//     console.log("hello");
-//     timer = timer - 5;
-//     // questionTwo();
-// });
-// AllButtons[2].addEventListener("click", function () {
-//     console.log("hello");
-//     timer = timer - 5;
-//     // questionTwo();
-// });
-// AllButtons[3].addEventListener("click", function () {
-//     console.log("hello");
-//     // questionTwo();
-// });
-// AllButtons[4].addEventListener("click", function () {
-//     console.log("hello");
-//     timer = timer - 5;
-//     // questionTwo();
-// });
-
-function questionTwo() {
-    document.body.children[2].style.visibility = "visible";
-    questionTitle.textContent = "2. Why is Gretchen Weiner's hair so big?";
-    firstButton.innerHTML = "Because it's full of secrets";
-    secondButton.innerHTML = "Because she's too cool for anyone";
-    thirdButton.innerHTML = "Because her dad invented the Toaster Strudel";
-    fourthButton.innerHTML = "Because she's too popular";
-
-    for (var i = 0; i < AllButtons.length; i++) {
-        AllButtons[i].addEventListener("click", function () {
-            // AllButtons[i] == this
-            if (this != AllButtons[1]) {
-                console.log("test", this);
-                timer = timer - 3;
+            if (userSelection != currentQuestion.answer) {
+                timer -= 5;
             }
-            questionThree();
+            questionNumber++;
+            beginQuestions();
         });
     }
-}
-
-function questionThree() {
-    document.body.children[2].style.visibility = "visible";
-    questionTitle.textContent =
-        "3. Which accessory of Cady Heron's did Regina George compliment?";
-    firstButton.innerHTML = "Ring";
-    secondButton.innerHTML = "Bracelets";
-    thirdButton.innerHTML = "Necklace";
-    fourthButton.innerHTML = "Earrings";
-
-    for (var i = 0; i < AllButtons.length; i++) {
-        AllButtons[i].addEventListener("click", function () {
-            // AllButtons[i] == this
-            if (this != AllButtons[2]) {
-                console.log(this);
-                timer = timer - 3;
-            }
-            questionFour();
-        });
-    }
-}
-
-function questionFour() {
-    document.body.children[2].style.visibility = "visible";
-    questionTitle.textContent =
-        "4. On Wednesday's we wear pink, but what day do we wear trackpants?";
-    firstButton.innerHTML = "Never";
-    secondButton.innerHTML = "Wednesday";
-    thirdButton.innerHTML = "Friday";
-    fourthButton.innerHTML = "Thursday";
-
-    for (var i = 0; i < AllButtons.length; i++) {
-        AllButtons[i].addEventListener("click", function () {
-            // AllButtons[i] == this
-            if (this != AllButtons[3]) {
-                console.log(this);
-                timer = timer - 3;
-            }
-            questionFive();
-        });
-    }
-}
-
-function questionFive() {
-    document.body.children[2].style.visibility = "visible";
-    questionTitle.textContent =
-        "5. On what date did Aaron Samuels ask Cady Heron what day it was?";
-    firstButton.innerHTML = "December 3rd";
-    secondButton.innerHTML = "October 3rd";
-    thirdButton.innerHTML = "November 3rd";
-    fourthButton.innerHTML = "September 3rd";
-
-    for (var i = 0; i < AllButtons.length; i++) {
-        AllButtons[i].addEventListener("click", function () {
-            // AllButtons[i] == this
-            if (this != AllButtons[2]) {
-                console.log(this);
-                timer = timer - 3;
-            }
-        });
-    }
-    scorePage();
 }
 
 function scorePage() {
-    var userInformation = document.querySelector(".Name");
-    var score = document.querySelector(".score");
-
-    var userName = document.createElement("input");
-    userInformation.appendChild(userName);
+    console.log("score!");
 }
-
-// AllButtons.addEventListener("click", function () {
-//     if (document.body.children[2].getElementsByClassName("Button-Three")) {
-//         timer = timer - 5;
-//     }
-//     if (timer === 0) {
-//         timerEl.textContent = " ";
-//         clearInterval(timerInterval);
-//         // scorepage();
-//     }
-//     // questionTwo();
-// });
-
-// let Choice = "";
-// var buttonCreation = document.createElement("button");
-// options.forEach(ButtonCreation);
-// document.querySelector(".Buttons").innerHTML = Choice;
-// function ButtonCreation(item) {
-//     var buttonCreate = document.createElement("button");
-//     buttonCreate += item;
-// }
-
-// var questionOne = '1. Stop trying to make "what" happen?';
-// var optionOne = ["Wicked, Cool, Fetch, Sweet"];
-// var questionTwo = "2. Why is Gretchen Weiner's hair so big?";
-// var optionTwo = [
-//     "Because it's full of secrets, Because she's too cool for anyone, Because her dad invented the Toaster Strudel, Because she's too popular",
-// ];
-// var questionThree =
-//     "3. Which accessory of Cady Heron's did Regina George compliment?";
-// var optionThree = ["Ring, Bracelet, Necklace, Earrings"];
-// var questionFour =
-//     "4. On Wednesday's we wear pink, but what day do we wear trackpants?";
-// var optionFour = ["Never, Monday, Friday, Tuesday"];
-// var questionFive =
-//     "5. On what date did Aaron Samuels ask Cady Heron what day it was?";
-// var optionFive = ["December 3rd, October 3rd, September 3rd, November 3rd"];
