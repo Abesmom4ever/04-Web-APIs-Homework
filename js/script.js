@@ -42,8 +42,6 @@ var questions = [
     },
 ];
 
-console.log(questions.length);
-
 document.querySelector(".title").textContent = "Are you a Mean Girl?";
 document.querySelector(".comment").textContent =
     "Take this quiz to see if you're a Mean Girl! You have 30 seconds and, with every wrong answer, the time will decrease! Have fun and Good Luck!";
@@ -52,6 +50,7 @@ var startButton = document.querySelector(".start-Button");
 var timerEl = document.querySelector(".timer");
 var timer = 60;
 var questionNumber = 0;
+var timerInterval;
 
 document.body.children[1].style.visibility = "hidden";
 
@@ -59,7 +58,7 @@ startButton.addEventListener("click", function () {
     document.querySelector(".title").textContent = " ";
     document.querySelector(".comment").textContent = " ";
     startButton.style.display = "none";
-    beginQuestions(0);
+    beginQuestions();
 });
 
 startButton.addEventListener("click", function () {
@@ -70,11 +69,11 @@ startButton.addEventListener("click", function () {
 });
 
 function countdown() {
-    var timerInterval = setInterval(function () {
+    timerInterval = setInterval(function () {
         timerEl.textContent = timer + " second(s) remaining";
         timer--;
 
-        if (timer === 0 || timer < 0) {
+        if (timer <= 0) {
             timerEl.textContent = "";
             clearInterval(timerInterval);
             scorePage();
@@ -83,13 +82,15 @@ function countdown() {
 }
 
 function beginQuestions() {
+    if (questionNumber == questions.length) {
+        return scorePage();
+    }
     document.body.children[1].style.visibility = "visible";
     optionList.innerHTML = "";
     questionTitle.innerHTML = "";
 
     var currentQuestion = questions[questionNumber];
-    var options = currentQuestion.options;
-    console.log(currentQuestion);
+    let options = currentQuestion.options;
 
     questionTitle.textContent = currentQuestion.question;
 
@@ -110,12 +111,42 @@ function beginQuestions() {
             if (userSelection != currentQuestion.answer) {
                 timer -= 5;
             }
-            questionNumber++;
             beginQuestions();
         });
     }
+    questionNumber++;
 }
 
 function scorePage() {
     console.log("score!");
+    document.body.children[1].style.visibility = "hidden";
+    clearInterval(timerInterval);
+    timerEl.textContent = "";
+
+    console.log(timer);
+    let nameTitle = document.querySelector(".nameTitle");
+    let name = document.querySelector(".name");
+    let score = document.querySelector(".comment");
+
+    nameTitle.innerHTML =
+        "Please save your name and score by clicking the save button below!";
+
+    const nameInput = document.createElement("input");
+    name.append(nameInput);
+    nameInput.setAttribute("type", "text");
+    nameInput.addEventListener("input", function () {
+        console.log(nameInput.value);
+    });
+
+    const saveButton = document.createElement("button");
+    document.querySelector(".button").append(saveButton);
+    saveButton.textContent = "Save";
+
+    score.innerHTML = "score: " + timer;
+
+    saveButton.addEventListener("click", function () {
+        var userInfo = document.querySelector(".userInfo");
+        var userName = nameInput.value;
+        userInfo.innerHTML = userName + ": " + timer;
+    });
 }
